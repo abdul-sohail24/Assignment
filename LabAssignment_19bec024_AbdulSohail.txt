@@ -1,0 +1,56 @@
+//Code 1
+#include <stdio.h>
+int main ()
+{
+  unsigned int x = 0x76543210;
+  char *c = (char*) &x;
+ 
+  printf ("*c is: 0x%x\n", *c);
+  if (*c)
+  {
+    printf ("Underlying architecture is little endian. \n");
+  }
+  else
+  {
+     printf ("Underlying architecture is big endian. \n");
+  }
+ 
+  return 0;
+}
+Output:
+
+//*c is: 0x10
+//Underlying architecture is little endian. 
+
+
+
+
+//Code2
+#include <stdio.h>
+#include <inttypes.h>
+//Function to change one endian to another
+uint32_t ChangeEndianness(uint32_t value)
+{
+uint32_t result = 0;
+result |= (value & 0x000000FF) << 24;
+result |= (value & 0x0000FF00) << 8;
+result |= (value & 0x00FF0000) >> 8;
+result |= (value & 0xFF000000) >> 24;
+return result;
+}
+int main()
+{
+uint32_t CheckData,result = 0;
+printf("Enter A hexadecimal number in the format of 0x[values] : ");
+scanf("%x",&CheckData);
+//swapping the inputs
+result = ChangeEndianness(CheckData);
+//printing the result
+printf("Data in little endian = 0x%x\n",result);
+return 0;
+}
+
+//Output:
+
+//Enter A hexadecimal number in the format of 0x[values] : 0x24112001                                                   
+//Data in little endian = 0x1201124
